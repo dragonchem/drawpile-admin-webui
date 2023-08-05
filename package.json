@@ -16,5 +16,8 @@
     "esbuild": "^0.17.19",
     "lit": "^2.7.4",
     "node-sass": "^9.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.9.3"
   }
 }
