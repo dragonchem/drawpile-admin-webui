@@ -50,7 +50,7 @@ export class PageControls extends DrawpileElement {
     this.killTimeout();
     this.autoRefreshSeconds = parseInt(
       (e.target as HTMLSelectElement).value,
-      10
+      10,
     );
     localStorage.setItem(this.autoRefreshKey, `${this.autoRefreshSeconds}`);
     this.autoRefresh();
@@ -64,7 +64,7 @@ export class PageControls extends DrawpileElement {
     ) {
       const lastTimestamp = Math.max(
         this.response?.responseTimestamp || 0,
-        this.lastRefresh || 0
+        this.lastRefresh || 0,
       );
       const timeout =
         this.autoRefreshSeconds * 1000 + lastTimestamp - Date.now();

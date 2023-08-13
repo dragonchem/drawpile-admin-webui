@@ -161,11 +161,11 @@ export abstract class TablePage<T> extends DrawpilePageElement {
 
     this.sortColumn = getFromLocalStorage(
       this.getSortColumnStorageKey(),
-      this.getDefaultSortColumn()
+      this.getDefaultSortColumn(),
     );
     this.sortDirection = getFromLocalStorage(
       this.getSortDirectionStorageKey(),
-      "asc"
+      "asc",
     );
 
     this.columns = [];
@@ -173,7 +173,7 @@ export abstract class TablePage<T> extends DrawpilePageElement {
       const column = new Column(def);
       if (!column.alwaysVisible) {
         const visibility = localStorage.getItem(
-          this.getColumnVisibilityStorageKey(column.key)
+          this.getColumnVisibilityStorageKey(column.key),
         );
         if (visibility === "show") {
           column.visible = true;
@@ -240,11 +240,11 @@ export abstract class TablePage<T> extends DrawpilePageElement {
     column.visible = visible;
     localStorage.setItem(
       this.getColumnVisibilityStorageKey(column.key),
-      column.visible ? "show" : "hide"
+      column.visible ? "show" : "hide",
     );
     // Checkbox state is overly sticky.
     const elem = this.querySelector(
-      `#table-column-visibility-${column.key}`
+      `#table-column-visibility-${column.key}`,
     ) as HTMLInputElement;
     elem.checked = column.visible;
   }
@@ -264,7 +264,7 @@ export abstract class TablePage<T> extends DrawpilePageElement {
       localStorage.setItem(this.getSortColumnStorageKey(), this.sortColumn);
       localStorage.setItem(
         this.getSortDirectionStorageKey(),
-        this.sortDirection
+        this.sortDirection,
       );
     }
   }
@@ -288,7 +288,7 @@ export abstract class TablePage<T> extends DrawpilePageElement {
     localStorage.setItem(filter.storageKey, filter.active ? "true" : "false");
     // Checkbox state is overly sticky.
     const elem = this.querySelector(
-      `#table-filter-option-${filter.index}`
+      `#table-filter-option-${filter.index}`,
     ) as HTMLInputElement;
     elem.checked = filter.checked;
   }
@@ -314,7 +314,7 @@ export abstract class TablePage<T> extends DrawpilePageElement {
         <summary aria-haspopup="listbox">Display columns</summary>
         <ul role="listbox">
           ${this.mapHideableColumns(
-            this.renderColumnVisibilityCheckbox.bind(this)
+            this.renderColumnVisibilityCheckbox.bind(this),
           )}
           <li>
             <a href="#" @click="${this.resetColumnVisibility.bind(this)}">
@@ -414,7 +414,7 @@ export abstract class TablePage<T> extends DrawpilePageElement {
       const columnCount = this.columns.reduce(
         (count: number, column: Column): number =>
           count + (column.visible ? 1 : 0),
-        0
+        0,
       );
       return html`
         <tr>

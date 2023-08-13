@@ -285,7 +285,7 @@ export class ListserverSessionsPage extends TablePage<Row> {
           }
         },
       ],
-      [null, () => Router.replace("/listserver/sessions")]
+      [null, () => Router.replace("/listserver/sessions")],
     );
   }
 

@@ -4,7 +4,7 @@ type RegExpHandler<T> = [RegExp, ((match: RegExpExecArray) => T) | null];
 type PrefixHandler<T> = [string, ((rest: string) => T) | null];
 type PrefixArrayHandler<T> = [
   readonly string[],
-  ((prefix: string, rest: string) => T) | null
+  ((prefix: string, rest: string) => T) | null,
 ];
 type Handler<T> =
   | CatchallHandler<T>
@@ -69,7 +69,7 @@ export class Router {
       } else if (Array.isArray(matcher)) {
         const [matched, result] = Router.dispatchPrefixArray(
           path,
-          handler as PrefixArrayHandler<T>
+          handler as PrefixArrayHandler<T>,
         );
         if (matched) {
           return result;
@@ -77,7 +77,7 @@ export class Router {
       } else {
         const [matched, result] = Router.dispatchRegExp(
           path,
-          handler as RegExpHandler<T>
+          handler as RegExpHandler<T>,
         );
         if (matched) {
           return result;
@@ -89,7 +89,7 @@ export class Router {
 
   private static dispatchPrefix<T>(
     path: string,
-    [matcher, fn]: PrefixHandler<T>
+    [matcher, fn]: PrefixHandler<T>,
   ): [boolean, T | undefined] {
     const [matched, rest] = Router.prefixMatches(path, matcher);
     if (matched) {
@@ -101,7 +101,7 @@ export class Router {
 
   private static dispatchPrefixArray<T>(
     path: string,
-    [matcher, fn]: PrefixArrayHandler<T>
+    [matcher, fn]: PrefixArrayHandler<T>,
   ): [boolean, T | undefined] {
     for (const prefix of matcher) {
       const [matched, rest] = Router.prefixMatches(path, prefix);
@@ -114,7 +114,7 @@ export class Router {
 
   private static dispatchRegExp<T>(
     path: string,
-    [matcher, fn]: RegExpHandler<T>
+    [matcher, fn]: RegExpHandler<T>,
   ): [boolean, T | undefined] {
     const result = matcher.exec(path);
     if (result) {
@@ -126,7 +126,7 @@ export class Router {
 
   private static prefixMatches(
     path: string,
-    prefix: string
+    prefix: string,
   ): [true, string] | [false, undefined] {
     if (path.startsWith(prefix)) {
       const rest = path.substring(prefix.length);

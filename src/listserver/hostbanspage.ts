@@ -171,7 +171,7 @@ export class ListserverHostBansPage extends TablePage<Row> {
           }
         },
       ],
-      [null, () => Router.replace("/listserver/hostbans")]
+      [null, () => Router.replace("/listserver/hostbans")],
     );
   }
 

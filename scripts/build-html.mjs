@@ -2,7 +2,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { argv, exit } from "node:process";
 
-if (argv.length !== 8) {
+if (argv.length !== 9) {
   console.error("Invalid arguments.");
   console.error(
     "Usage: %s %s TEMPLATE_PATH OUTPUT_PATH CSS_URL JS_URL LOGO_URL LISTSERVER_ADMIN_ROOT_URL",
@@ -18,6 +18,7 @@ const cssUrl = argv[4];
 const jsUrl = argv[5];
 const logoUrl = argv[6];
 const listserverAdminRootUrl = argv[7];
+const webadminRootUrl = argv[8];
 
 function readTemplate() {
   return readFileSync(templatePath, { encoding: "utf-8" });
@@ -32,7 +33,7 @@ function getJs() {
 }
 
 function getElement() {
-  return `<drawpile-webui logo="${logoUrl}" listserver="${listserverAdminRootUrl}"></drawpile-webui>`;
+  return `<drawpile-webui logo="${logoUrl}" listserver="${listserverAdminRootUrl}" webadmin="${webadminRootUrl}"></drawpile-webui>`;
 }
 
 function process(template) {

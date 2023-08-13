@@ -19,7 +19,7 @@ export class ListserverSessionKickForm extends DrawpileElement {
       this.submitting = true;
       this.error = "";
       const sessionIds = this.sessions.map(
-        (session: ListserverSessionResponse): number => session.id
+        (session: ListserverSessionResponse): number => session.id,
       );
       this.api
         .putSessions(sessionIds, this.reason)

@@ -173,7 +173,7 @@ export class ListserverRolesPage extends TablePage<Row> {
           }
         },
       ],
-      [null, () => Router.replace("/listserver/roles")]
+      [null, () => Router.replace("/listserver/roles")],
     );
   }
 

@@ -53,7 +53,7 @@ export class ListserverHostBanForm extends DrawpileElement {
         this.existingId!,
         this.host,
         this.expires,
-        this.notes
+        this.notes,
       );
     }
   }
@@ -68,7 +68,7 @@ export class ListserverHostBanForm extends DrawpileElement {
   private setRelativeExpiry(
     unit: "day" | "month" | "year" | "forever",
     count: number,
-    e: Event
+    e: Event,
   ): void {
     killEvent(e);
     let expires: string;

@@ -59,7 +59,7 @@ export class ListserverIndex extends DrawpilePageElement {
             Router.replace("/listserver/login");
           }
         },
-      ]
+      ],
     );
   }
 
@@ -127,7 +127,7 @@ export class ListserverIndex extends DrawpilePageElement {
         },
       ],
       ["/login", this.renderLogin.bind(this)],
-      [null, (): RenderResult => nothing]
+      [null, (): RenderResult => nothing],
     );
   }
 
@@ -198,7 +198,7 @@ export class ListserverIndex extends DrawpilePageElement {
 
   private renderChangePasswordButton(
     userId: number,
-    prefix: string
+    prefix: string,
   ): RenderResult {
     if (userId === 0) {
       return nothing;

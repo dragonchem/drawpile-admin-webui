@@ -146,7 +146,7 @@ export type ListserverUsersResponse = ListserverUserResponse[];
 
 export function accessToString(
   access: ListserverAccess,
-  admin: boolean = false
+  admin: boolean = false,
 ) {
   if (admin) {
     return "admin";
@@ -174,7 +174,7 @@ export class ListserverApi extends ApiBase {
   private async request<T>(
     path: string,
     method: ApiMethod,
-    body?: object
+    body?: object,
   ): Promise<ApiResponse<T>> {
     const headers = new Headers();
     headers.set("Accept", "application/json");
@@ -192,7 +192,7 @@ export class ListserverApi extends ApiBase {
       return new ApiResponse<T>(
         requestTimestamp,
         Date.now(),
-        JSON.parse(await res.text())
+        JSON.parse(await res.text()),
       );
     } else {
       const err = await ApiHttpError.create(res);
@@ -210,7 +210,7 @@ export class ListserverApi extends ApiBase {
 
   async putSessions(
     sessionIds: number[],
-    reason: string
+    reason: string,
   ): Promise<ApiResponse<ListserverKickResponse>> {
     return this.request("/sessions/", "PUT", {
       ids: sessionIds,
@@ -226,7 +226,7 @@ export class ListserverApi extends ApiBase {
   async postHostBan(
     host: string,
     expires: string,
-    notes: string
+    notes: string,
   ): Promise<ApiResponse<ListserverCreateHostBanResponse>> {
     return this.request("/bans/", "POST", { host, expires, notes });
   }
@@ -235,13 +235,13 @@ export class ListserverApi extends ApiBase {
     id: number,
     host: string,
     expires: string,
-    notes: string
+    notes: string,
   ): Promise<ApiResponse<ListserverUpdateHostBanResponse>> {
     return this.request(`/bans/${id}`, "PUT", { host, expires, notes });
   }
 
   async deleteHostBan(
-    id: number
+    id: number,
   ): Promise<ApiResponse<ListserverDeleteHostBanResponse>> {
     return this.request(`/bans/${id}`, "DELETE");
   }
@@ -256,7 +256,7 @@ export class ListserverApi extends ApiBase {
     accesssessions: ListserverAccess,
     accesshostbans: ListserverAccess,
     accessroles: ListserverAccess,
-    accessusers: ListserverAccess
+    accessusers: ListserverAccess,
   ): Promise<ApiResponse<ListserverCreateRoleResponse>> {
     return this.request("/roles/", "POST", {
       name,
@@ -275,7 +275,7 @@ export class ListserverApi extends ApiBase {
     accesssessions: ListserverAccess,
     accesshostbans: ListserverAccess,
     accessroles: ListserverAccess,
-    accessusers: ListserverAccess
+    accessusers: ListserverAccess,
   ): Promise<ApiResponse<ListserverUpdateRoleResponse>> {
     return this.request(`/roles/${id}`, "PUT", {
       name,
@@ -288,7 +288,7 @@ export class ListserverApi extends ApiBase {
   }
 
   async deleteRole(
-    id: number
+    id: number,
   ): Promise<ApiResponse<ListserverDeleteRoleResponse>> {
     return this.request(`/roles/${id}`, "DELETE");
   }
@@ -300,7 +300,7 @@ export class ListserverApi extends ApiBase {
   async postUser(
     name: string,
     password: string,
-    role: string
+    role: string,
   ): Promise<ApiResponse<ListserverCreateUserResponse>> {
     return this.request("/users/", "POST", { name, password, role });
   }
@@ -309,19 +309,19 @@ export class ListserverApi extends ApiBase {
     id: number,
     name: string,
     password: string,
-    role: string
+    role: string,
   ): Promise<ApiResponse<ListserverUpdateUserResponse>> {
     return this.request(`/users/${id}`, "PUT", { name, password, role });
   }
 
   async deleteUser(
-    id: number
+    id: number,
   ): Promise<ApiResponse<ListserverDeleteUserResponse>> {
     return this.request(`/users/${id}`, "DELETE");
   }
 
   async changePassword(
-    password: string
+    password: string,
   ): Promise<ApiResponse<ListserverChangePasswordResponse>> {
     return this.request("/users/self/password", "PUT", { password });
   }

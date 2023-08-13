@@ -18,7 +18,7 @@ export class ListserverServerPage extends DrawpilePageElement {
     Router.dispatch(
       this.path,
       ["/", null],
-      [null, () => Router.replace("/listserver/server")]
+      [null, () => Router.replace("/listserver/server")],
     );
   }
 

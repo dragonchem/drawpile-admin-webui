@@ -56,7 +56,7 @@ export abstract class DrawpileElement extends LitElement {
             bubbles: true,
             composed: true,
             detail: detail,
-          })
+          }),
     );
   }
 }

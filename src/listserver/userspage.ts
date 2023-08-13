@@ -141,7 +141,7 @@ export class ListserverUsersPage extends TablePage<Row> {
           }
         },
       ],
-      [null, () => Router.replace("/listserver/users")]
+      [null, () => Router.replace("/listserver/users")],
     );
   }
 

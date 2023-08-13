@@ -62,7 +62,7 @@ export class ListserverHostBanForm extends DrawpileElement {
         this.accesssessions,
         this.accesshostbans,
         this.accessroles,
-        this.accessusers
+        this.accessusers,
       );
     } else if (this.isDeleteForm()) {
       return this.api.deleteRole(this.existingId!);
@@ -74,7 +74,7 @@ export class ListserverHostBanForm extends DrawpileElement {
         this.accesssessions,
         this.accesshostbans,
         this.accessroles,
-        this.accessusers
+        this.accessusers,
       );
     }
   }
@@ -143,28 +143,28 @@ export class ListserverHostBanForm extends DrawpileElement {
           isDelete,
           "Sessions",
           "accesssessions",
-          true
+          true,
         )}
         ${this.renderPermissions(
           isReadonly,
           isDelete,
           "Bans",
           "accesshostbans",
-          true
+          true,
         )}
         ${this.renderPermissions(
           isReadonly,
           isDelete,
           "Roles",
           "accessroles",
-          false
+          false,
         )}
         ${this.renderPermissions(
           isReadonly,
           isDelete,
           "Users",
           "accessusers",
-          false
+          false,
         )}
         ${this.renderError()}
         <div class="grid">
@@ -212,7 +212,7 @@ export class ListserverHostBanForm extends DrawpileElement {
 
   private renderNameInfo(
     isDelete: boolean,
-    invalidName: boolean
+    invalidName: boolean,
   ): RenderResult {
     if (isDelete) {
       return nothing;
@@ -237,7 +237,7 @@ export class ListserverHostBanForm extends DrawpileElement {
     isDelete: boolean,
     title: string,
     key: keyof this,
-    allowManage: boolean
+    allowManage: boolean,
   ): RenderResult {
     const value = this[key] as ListserverAccess;
     return html`
@@ -249,7 +249,7 @@ export class ListserverHostBanForm extends DrawpileElement {
           key,
           value,
           LISTSERVER_ACCESS_NONE,
-          html`None &ndash; no access at all`
+          html`None &ndash; no access at all`,
         )}
         ${this.renderPermissionInput(
           isReadonly,
@@ -257,7 +257,7 @@ export class ListserverHostBanForm extends DrawpileElement {
           key,
           value,
           LISTSERVER_ACCESS_VIEW,
-          html`View &ndash; only viewing, no changing`
+          html`View &ndash; only viewing, no changing`,
         )}
         ${allowManage
           ? this.renderPermissionInput(
@@ -266,7 +266,7 @@ export class ListserverHostBanForm extends DrawpileElement {
               key,
               value,
               LISTSERVER_ACCESS_MANAGE,
-              html`Manage &ndash; can create, edit and delete`
+              html`Manage &ndash; can create, edit and delete`,
             )
           : nothing}
       </fieldset>
@@ -279,7 +279,7 @@ export class ListserverHostBanForm extends DrawpileElement {
     key: keyof this,
     value: ListserverAccess,
     access: ListserverAccess,
-    title: RenderResult
+    title: RenderResult,
   ): RenderResult {
     return html`
       <label>

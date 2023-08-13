@@ -80,7 +80,7 @@ export class ListserverUserForm extends DrawpileElement {
         this.existingId!,
         this.name,
         this.password,
-        this.role
+        this.role,
       );
     }
   }
@@ -134,7 +134,7 @@ export class ListserverUserForm extends DrawpileElement {
           isDelete,
           isReadonly,
           password,
-          mismatchError
+          mismatchError,
         )}
         ${this.renderRoles()} ${this.renderError()}
         <div class="grid">
@@ -182,7 +182,7 @@ export class ListserverUserForm extends DrawpileElement {
 
   private renderNameInfo(
     isDelete: boolean,
-    invalidName: boolean
+    invalidName: boolean,
   ): RenderResult {
     if (isDelete) {
       return nothing;
@@ -207,7 +207,7 @@ export class ListserverUserForm extends DrawpileElement {
     isDelete: boolean,
     isReadonly: boolean,
     password: string,
-    mismatchError: boolean
+    mismatchError: boolean,
   ): RenderResult {
     if (isDelete) {
       return nothing;
@@ -234,7 +234,7 @@ export class ListserverUserForm extends DrawpileElement {
           isCreate,
           isReadonly,
           password,
-          mismatchError
+          mismatchError,
         )}
       `;
     }
@@ -244,7 +244,7 @@ export class ListserverUserForm extends DrawpileElement {
     isCreate: boolean,
     isReadonly: boolean,
     password: string,
-    mismatchError: boolean
+    mismatchError: boolean,
   ): RenderResult {
     if (isCreate || password.length) {
       const note = mismatchError
