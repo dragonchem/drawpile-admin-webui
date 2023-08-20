@@ -1,5 +1,14 @@
 import { ApiBase, ApiHttpError, ApiMethod, ApiResponse } from "../api";
 
+export type WebadminServerStatusResponse = {
+  started: string;
+  sessions: number;
+  maxSessions: number;
+  users: number;
+  ext_host: string;
+  ext_port: number;
+};
+
 export class WebadminApi extends ApiBase {
   readonly baseUrl: string;
   private readonly auth: string;
@@ -38,5 +47,9 @@ export class WebadminApi extends ApiBase {
       const err = await ApiHttpError.create(res);
       return Promise.reject(err);
     }
+  }
+  
+  async getStatus(): Promise<ApiResponse<WebadminServerStatusResponse>> {
+    return this.request("/status", "GET");
   }
 }

@@ -60,3 +60,8 @@ export abstract class ApiBase {
     }
   }
 }
+
+export type LoginEventDetail = {
+  api: ApiBase;
+  rootResponse: ApiResponse<any>;
+};

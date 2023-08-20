@@ -3,13 +3,8 @@ import { html, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { DrawpileElement, RenderResult } from "../element";
 import { ListserverApi, ListserverRootResponse } from "./api";
-import { ApiHttpError, ApiResponse } from "../api";
+import { ApiHttpError, ApiResponse, LoginEventDetail } from "../api";
 import { killEvent } from "../util";
-
-export type LoginEventDetail = {
-  api: ListserverApi;
-  rootResponse: ApiResponse<ListserverRootResponse>;
-};
 
 @customElement("listserver-login")
 export class ListserverLogin extends DrawpileElement {

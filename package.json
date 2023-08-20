@@ -7,7 +7,7 @@
     "build:css": "node-sass --source-map=true --output=dist --output-style=compressed --include-path=node_modules/@picocss/pico/scss scss",
     "build:html": "node scripts/build-html.mjs index.template.html dist/index.html drawpile-webui.css drawpile-webui.js logo.svg",
     "build": "npm run build:js && npm run build:css && npm run build:html",
-    "dev": "npm run build -- http://localhost:8080/admin http://localhost:27750/api"
+    "dev": "npm run build -- http://localhost:8080/admin http://localhost:27751/api"
   },
   "author": "askmeaboutloom",
   "license": "MIT",

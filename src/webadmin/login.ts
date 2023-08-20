@@ -1,11 +1,12 @@
 import { nothing, html } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
+import { ApiHttpError, ApiResponse, LoginEventDetail } from "../api";
 import { DrawpileElement, RenderResult } from "../element";
 import { killEvent } from "../util";
-import { WebadminApi } from "./api";
+import { WebadminApi, WebadminServerStatusResponse } from "./api";
 
 @customElement("webadmin-login")
-export class ListserverLogin extends DrawpileElement {
+export class WebadminLogin extends DrawpileElement {
   @property() apiBaseUrl!: string;
   @property({ type: Boolean }) wantLogout: boolean = false;
   @state() username: string = "";
@@ -19,11 +20,11 @@ export class ListserverLogin extends DrawpileElement {
   }
 
   static getLocalStorageKey(apiBaseUrl: string): string {
-    return `dpadmin:listserver:auth:${apiBaseUrl}`;
+    return `dpadmin:webservice:auth:${apiBaseUrl}`;
   }
 
   private get localStorageKey(): string {
-    return ListserverLogin.getLocalStorageKey(this.apiBaseUrl);
+    return WebadminLogin.getLocalStorageKey(this.apiBaseUrl);
   }
 
   override connectedCallback(): void {
@@ -44,29 +45,29 @@ export class ListserverLogin extends DrawpileElement {
       this.errorMessage = "";
       this.invalidInputs = false;
       const api = new WebadminApi(this.apiBaseUrl, auth);
-      //   api
-      //     .getRoot()
-      //     .then((rootResponse: ApiResponse<ListserverRootResponse>): void => {
-      //       localStorage.setItem(this.localStorageKey, auth);
-      //       const detail: LoginEventDetail = { api, rootResponse };
-      //       this.emit("login", detail);
-      //     })
-      //     .catch((reason: any): void => {
-      //       if (reason instanceof ApiHttpError && reason.status === 401) {
-      //         this.errorMessage = "Incorrect username or password.";
-      //         this.invalidInputs = true;
-      //         localStorage.removeItem(this.localStorageKey);
-      //       } else {
-      //         this.errorMessage = api.getErrorMessage(reason);
-      //       }
-      //       this.submitting = false;
-      //     });
+      api
+        .getStatus()
+        .then((rootResponse: ApiResponse<WebadminServerStatusResponse>): void => {
+          localStorage.setItem(this.localStorageKey, auth);
+          const detail: LoginEventDetail = { api, rootResponse };
+          this.emit("login", detail);
+        })
+        .catch((reason: any): void => {
+          if (reason instanceof ApiHttpError && reason.status === 401) {
+            this.errorMessage = "Incorrect username or password.";
+            this.invalidInputs = true;
+            localStorage.removeItem(this.localStorageKey);
+          } else {
+            this.errorMessage = api.getErrorMessage(reason);
+          }
+          this.submitting = false;
+        });
     }
   }
 
   private submit(e: Event): void {
     killEvent(e);
-    this.login(ListserverLogin.formatAuth(this.username, this.password));
+    this.login(WebadminLogin.formatAuth(this.username, this.password));
   }
 
   override render(): RenderResult {
