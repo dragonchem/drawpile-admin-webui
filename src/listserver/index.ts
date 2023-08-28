@@ -7,8 +7,7 @@ import {
   ListserverApi,
   ListserverRootResponse,
 } from "./api";
-import { ApiResponse } from "../api";
-import { LoginEventDetail } from "./login";
+import { ApiResponse, LoginEventDetail } from "../api";
 import { Router } from "../router";
 import "./changepasswordform";
 import "./hostbanspage";
@@ -65,7 +64,7 @@ export class ListserverIndex extends DrawpilePageElement {
 
   private login(e: CustomEvent): void {
     const detail = e.detail as LoginEventDetail;
-    this.api = detail.api;
+    this.api = detail.api as ListserverApi;
     this.rootResponse = detail.rootResponse;
     this.wantLogout = false;
     if (this.targetPath) {

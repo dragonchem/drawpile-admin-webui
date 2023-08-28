@@ -40,7 +40,7 @@ export class WebadminLogin extends DrawpileElement {
   }
 
   private login(auth: string): void {
-    if (!this.submitting) {
+    if (!this.submitting && auth) {
       this.submitting = true;
       this.errorMessage = "";
       this.invalidInputs = false;
@@ -67,6 +67,7 @@ export class WebadminLogin extends DrawpileElement {
 
   private submit(e: Event): void {
     killEvent(e);
+    console.log('submit')
     this.login(WebadminLogin.formatAuth(this.username, this.password));
   }
 
@@ -85,6 +86,7 @@ export class WebadminLogin extends DrawpileElement {
         <form @submit="${this.submit}">
           <label for="firstname">
             Username
+            ${this.submitting}
             <input
               .value=${this.username}
               @change="${this.bindInput("username")}"

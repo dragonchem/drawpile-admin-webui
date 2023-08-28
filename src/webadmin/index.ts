@@ -1,15 +1,19 @@
-import { html, nothing } from "lit";
+import { nothing } from "lit";
+import { html, unsafeStatic } from 'lit/static-html.js';
 import { customElement, property, state } from "lit/decorators.js";
 import { DrawpilePageElement, RenderResult } from "../element";
 import { Router } from "../router";
-import { WebadminApi } from "./api";
+import { WebadminApi, WebadminServerStatusResponse } from "./api";
+import { ApiResponse, LoginEventDetail } from "../api";
 import './api';
 import './login';
+import './server';
+import './navlink';
 
 @customElement("webadmin-index")
 export class WebadminIndex extends DrawpilePageElement {
   static readonly pages = Object.freeze([
-    // "/server",
+    "/server",
     // "/sessions",
     // "/hostbans",
     // "/roles",
@@ -20,19 +24,20 @@ export class WebadminIndex extends DrawpilePageElement {
   @property() apibaseurl!: string;
   @state() api: WebadminApi | null = null;
   @state() wantLogout: boolean = false;
+  @state() statusResponse?: ApiResponse<WebadminServerStatusResponse>;
   targetPath?: string;
 
   private login(e: CustomEvent): void {
-    // const detail = e.detail as LoginEventDetail;
-    // this.api = detail.api;
-    // this.rootResponse = detail.rootResponse;
-    // this.wantLogout = false;
-    // if (this.targetPath) {
-    //   Router.push(`/listserver${this.targetPath}`);
-    //   delete this.targetPath;
-    // } else {
-    //   Router.push(`/listserver${WebadminIndex.pages[0]}`);
-    // }
+    const detail = e.detail as LoginEventDetail;
+    this.api = detail.api as WebadminApi;
+    this.statusResponse = detail.rootResponse;
+    this.wantLogout = false;
+    if (this.targetPath) {
+      Router.push(`/webadmin${this.targetPath}`);
+      delete this.targetPath;
+    } else {
+      Router.push(`/webadmin${WebadminIndex.pages[0]}`);
+    }
   }
 
   protected override checkPath(): void {
@@ -82,7 +87,25 @@ export class WebadminIndex extends DrawpilePageElement {
   }
 
   private renderMain(prefix: string, rest: string) {
-    return html`test`;
+    return html`
+    <main class="container">
+      <article>
+        <header>
+          <hgroup>
+            <h1>Web admin</h1>
+          </hgroup>
+          <div class="grid">
+          <webadmin-navlink
+            path="${this.path}"
+            href="/server"
+            label="Server"
+          ></webadmin-navlink>
+          </div>
+        </header>
+        ${this.renderPage(prefix, rest)}
+      </article>
+    </main>
+    `;
   }
 
   private renderLogin(): RenderResult {
@@ -94,6 +117,16 @@ export class WebadminIndex extends DrawpilePageElement {
           @login="${this.login}"
         ></webadmin-login>
       </main>
+    `;
+  }
+
+  private renderPage(prefix: string, rest: string): RenderResult {
+    const elementName = `webadmin-${prefix.replace('/', '')}`;
+    return html`
+      <${unsafeStatic(elementName)}
+        .api=${this.api}
+        path=${rest}
+      ></${unsafeStatic(elementName)}>
     `;
   }
 }
