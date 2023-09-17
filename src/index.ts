@@ -22,7 +22,6 @@ export class DrawpileWebui extends DrawpileElement {
   }
 
   routeChanged(path: string) {
-    console.log(path);
     Router.dispatch(
       path,
       [

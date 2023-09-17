@@ -67,7 +67,6 @@ export class WebadminLogin extends DrawpileElement {
 
   private submit(e: Event): void {
     killEvent(e);
-    console.log('submit')
     this.login(WebadminLogin.formatAuth(this.username, this.password));
   }
 

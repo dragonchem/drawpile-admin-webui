@@ -9,6 +9,31 @@ export type WebadminServerStatusResponse = {
   ext_port: number;
 };
 
+export type WebadminServerSettingsResponse = {
+  allowGuestHosts?: boolean,
+  allowGuests?: boolean,
+  archive?: boolean,
+  autoResetThreshold?: number,
+  clientTimeout?: number,
+  customAvatars?: boolean,
+  extAuthAvatars?: boolean,
+  extauthfallback?: boolean,
+  extauthgroup?: string,
+  extauthhost?: boolean,
+  extauthkey?: string,
+  extauthmod?: boolean,
+  forceNsfm?: boolean,
+  idleTimeLimit?: number,
+  logpurgedays?: number,
+  persistence?: boolean,
+  privateUserList?: boolean,
+  reporttoken?: string,
+  serverTitle?: string,
+  sessionCountLimit?: number,
+  sessionSizeLimit?: number,
+  welcomeMessage?: string
+}
+
 export class WebadminApi extends ApiBase {
   readonly baseUrl: string;
   private readonly auth: string;
@@ -17,7 +42,6 @@ export class WebadminApi extends ApiBase {
     super();
     this.baseUrl = baseUrl.replace(/\/+$/, "");
     this.auth = auth;
-    console.log(this.baseUrl);
   }
 
   private async request<T>(
@@ -51,5 +75,21 @@ export class WebadminApi extends ApiBase {
   
   async getStatus(): Promise<ApiResponse<WebadminServerStatusResponse>> {
     return this.request("/status", "GET");
+  }
+  
+  async getSettings(): Promise<ApiResponse<WebadminServerSettingsResponse>> {
+    return this.request("/server", "GET");
+  }
+
+  async patchSettings(settings: WebadminServerSettingsResponse) {
+    const promise = this.request<WebadminServerSettingsResponse>("/server", "PUT", settings);
+    this.setSuccess(promise, 'Saved succesfully.');
+    return promise;
+  }
+
+  private setSuccess(promise: Promise<ApiResponse<any>>, message: string) {
+    promise.then(() => {
+      window.dispatchEvent(new CustomEvent('webapi-success', { detail: message }));
+    });
   }
 }

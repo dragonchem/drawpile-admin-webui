@@ -140,3 +140,24 @@ top-bar img {
 listserver-navlink > a {
   width: 100%;
 }
+
+textarea {
+  resize: vertical;
+}
+
+.popup {
+  transition: 500ms ease-in-out;
+  position: fixed;
+  right: 10%;
+  background: var(--primary);
+  text-align: center;
+  padding: 10px 25px;
+  bottom: 5%;
+  border-radius: 5px;
+  font-weight: bold;
+
+  span {
+    font-weight: normal;
+    cursor: pointer;
+  }
+}

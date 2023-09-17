@@ -56,7 +56,6 @@ export class WebadminIndex extends DrawpilePageElement {
       [
         null,
         () => {
-            console.log(this.api)
           if (this.api) {
             Router.replace(`/webadmin${WebadminIndex.pages[0]}`);
           } else {
@@ -68,7 +67,6 @@ export class WebadminIndex extends DrawpilePageElement {
   }
 
   override render(): RenderResult {
-    console.log(this.path)
     return Router.dispatch(
       this.path,
       [

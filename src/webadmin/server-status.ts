@@ -6,7 +6,7 @@ import { DrawpileElement, RenderResult } from "../element";
 import { WebadminApi, WebadminServerStatusResponse } from "./api";
 
 @customElement("webadmin-server-status")
-export class WebadminServer extends DrawpileElement {
+export class WebadminServerStatus extends DrawpileElement {
     @property() apiBaseUrl!: string;
     @state() api: WebadminApi | null = null;
     @state() status?: ApiResponse<WebadminServerStatusResponse>;
@@ -18,7 +18,6 @@ export class WebadminServer extends DrawpileElement {
         super.connectedCallback();
         this.getStatus();
         this.interval = setInterval(() => {
-            console.log('status');
             this.getStatus();
         }, 5000);
     }
@@ -41,6 +40,17 @@ export class WebadminServer extends DrawpileElement {
 
     override render(): RenderResult {
         return html`
+            ${this.error ? `<p>${this.error}</p>` : ''}
+            Host: ${this.status?.result?.ext_host}
+            <br/>
+            Port: ${this.status?.result?.ext_port}
+            <br/>
+            Max sessions: ${this.status?.result?.maxSessions}
+            <br/>
+            Started on: ${this.status?.result?.started}
+            <br/>
+            Current users: ${this.status?.result?.users}
+            <br/>
             <button
                 @click=${this.getStatus}
                 aria-busy="${this.loading ? "true" : nothing}"
@@ -48,11 +58,6 @@ export class WebadminServer extends DrawpileElement {
             >
                 ${this.loading ? "Refreshing..." : "Refresh"}
             </button>
-            Host: ${this.status?.result?.ext_host}
-            Port: ${this.status?.result?.ext_port}
-            Max sessions: ${this.status?.result?.maxSessions}
-            Started on: ${this.status?.result?.started}
-            Current users: ${this.status?.result?.users}
         `;
     }
 }

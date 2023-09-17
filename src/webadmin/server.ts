@@ -6,23 +6,46 @@ import { Router } from '../router';
 import { nothing } from 'lit';
 import { WebadminApi } from './api';
 import './server-status'
+import './server-appearance'
+import './server-connections'
+import './server-authentication'
 
 @customElement("webadmin-server")
 export class WebadminServer extends DrawpilePageElement {
     static readonly pages = Object.freeze([
       "/status",
-      // "/sessions",
-      // "/hostbans",
-      // "/roles",
-      // "/users",
-      // "/changepassword",
+      "/appearance",
+      "/connections",
+      "/authentication"
     ]);
     @property() apiBaseUrl!: string;
     @state() api: WebadminApi | null = null;
+    @property() success: boolean = false;
+    @property() successMessage: string = '';
     targetPath?: string;
 
+    override connectedCallback(): void {
+      super.connectedCallback();
+      window.addEventListener('webapi-success', (e: Event) => this.handleStateUpdated(e as CustomEvent))
+    }
+
+    private handleStateUpdated(e: CustomEvent) {
+      this.success = true;
+      this.successMessage = e.detail;
+      setTimeout(() => {
+        this.closeSucces();
+      }, 5000);
+    }
+
+    closeSucces() {
+      this.success = false;
+    }
+
+    override disconnectedCallback(): void {
+      super.disconnectedCallback();
+    }
+
     protected override checkPath(): void {
-        console.log(this.path);
       Router.dispatch(
         this.path,
         [
@@ -37,7 +60,6 @@ export class WebadminServer extends DrawpilePageElement {
         [
           null,
           () => {
-              console.log(this.api)
             if (this.api) {
               Router.replace(`/webadmin/server${WebadminServer.pages[0]}`);
             } else {
@@ -49,7 +71,6 @@ export class WebadminServer extends DrawpilePageElement {
     }
 
     override render(): RenderResult {
-      console.log(this.path)
       return Router.dispatch(
         this.path,
         [
@@ -69,17 +90,33 @@ export class WebadminServer extends DrawpilePageElement {
     private renderMain(prefix: string, rest: string) {
       return html`
         <webadmin-navlink
-            path="${this.path}"
-            href="/status"
-            label="Status"
+          path="${this.path}"
+          href="/status"
+          label="Status"
         ></webadmin-navlink>
+        <webadmin-navlink
+          path="${this.path}"
+          href="/appearance"
+          label="Appearance"
+        ></webadmin-navlink>
+        <webadmin-navlink
+          path="${this.path}"
+          href="/connections"
+          label="Connections"
+        ></webadmin-navlink>
+        <br/>
         ${this.renderPage(prefix, rest)}
+        <div class="popup" style="${this.success ? 'opacity: 100' : 'opacity: 0'}">
+          ${this.successMessage}
+          <span @click=${this.closeSucces}>x</span>
+        </div>
       `;
     }
 
     private renderPage(prefix: string, rest: string): RenderResult {
       const elementName = `webadmin-server-${prefix.replace('/', '')}`;
       return html`
+        <br/>
         <${unsafeStatic(elementName)}
           .api=${this.api}
           path="${rest}"

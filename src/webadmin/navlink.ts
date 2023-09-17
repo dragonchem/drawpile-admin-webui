@@ -13,7 +13,7 @@ export class ListserverNavlink extends DrawpileElement {
     const isCurrent = this.path.startsWith(this.href);
     return html`
       <a
-        href="#/webadmin${this.href}"
+        href="#/webadmin/server${this.href}"
         role="button"
         class="secondary${isCurrent ? "" : " outline"}"
       >
