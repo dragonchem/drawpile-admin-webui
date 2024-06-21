@@ -19,17 +19,18 @@ const jsUrl = argv[5];
 const logoUrl = argv[6];
 const listserverAdminRootUrl = argv[7];
 const webadminRootUrl = argv[8];
+const cachebuster = `${Date.now()}`;
 
 function readTemplate() {
   return readFileSync(templatePath, { encoding: "utf-8" });
 }
 
 function getCss() {
-  return `<link rel="stylesheet" href="${cssUrl}" />`;
+  return `<link rel="stylesheet" href="${cssUrl}?cachebuster=${cachebuster}" />`;
 }
 
 function getJs() {
-  return `<script src="${jsUrl}"></script>`;
+  return `<script src="${jsUrl}?cachebuster=${cachebuster}"></script>`;
 }
 
 function getElement() {
