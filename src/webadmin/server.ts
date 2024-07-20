@@ -5,10 +5,10 @@ import { DrawpilePageElement, RenderResult } from "../element";
 import { Router } from '../router';
 import { nothing } from 'lit';
 import { WebadminApi } from './api';
-import './server-status'
-import './server-appearance'
-import './server-connections'
-import './server-authentication'
+import './server/server-status'
+import './server/server-appearance'
+import './server/server-connections'
+import './server/server-authentication'
 
 @customElement("webadmin-server")
 export class WebadminServer extends DrawpilePageElement {

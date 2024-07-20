@@ -47,6 +47,14 @@ export abstract class DrawpileElement extends LitElement {
       this[key] = (e.target as HTMLTextAreaElement).value as any;
     };
   }
+  
+  protected bindMultiFormatNumberInput(key: keyof this): (e: CustomEvent) => void {
+    return (e: CustomEvent) => {
+      if (e.detail !== undefined) {
+        this[key] = e.detail;
+      }
+    };
+  }
 
   protected emit(type: string, detail?: any): void {
     this.dispatchEvent(

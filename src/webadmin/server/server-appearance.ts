@@ -1,10 +1,10 @@
 
 import { html, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
-import { ApiResponse } from "../api";
-import { DrawpileElement, RenderResult } from "../element";
-import { killEvent } from "../util";
-import { WebadminApi, WebadminServerSettingsResponse } from "./api";
+import { ApiResponse } from "../../api";
+import { DrawpileElement, RenderResult } from "../../element";
+import { killEvent } from "../../util";
+import { WebadminApi, WebadminServerSettingsResponse } from "../api";
 
 @customElement("webadmin-server-appearance")
 export class WebadminServerAppearance extends DrawpileElement {

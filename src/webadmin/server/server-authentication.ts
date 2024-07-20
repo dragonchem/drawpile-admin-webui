@@ -1,9 +1,9 @@
 
 import { html } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
-import { ApiResponse } from "../api";
-import { DrawpileElement, RenderResult } from "../element";
-import { WebadminApi, WebadminServerSettingsResponse } from "./api";
+import { ApiResponse } from "../../api";
+import { DrawpileElement, RenderResult } from "../../element";
+import { WebadminApi, WebadminServerSettingsResponse } from "../api";
 
 @customElement("webadmin-server-authentication")
 export class WebadminServerAuthentication extends DrawpileElement {

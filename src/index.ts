@@ -6,6 +6,7 @@ import { Router } from "./router";
 import "./listserver";
 import "./webadmin";
 import "./page-controls";
+import "./multi-format-number-input";
 import "./top-bar";
 
 @customElement("drawpile-webui")
